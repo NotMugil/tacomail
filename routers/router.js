@@ -19,6 +19,40 @@ router.get("/eg", (req, res, next) =>{
   }
 })
 
+router.get("/home", (req, res, next) =>{
+  try {
+    res.render("index.ejs", {url:req.protocol+"://"+req.headers.host})
+    
+  } catch (error) {
+    
+  }
+})
+
+router.get("/dashboard", (req, res, next) =>{
+  try {
+    res.render("dashBoard.ejs", {url:req.protocol+"://"+req.headers.host})
+    
+  } catch (error) {
+    
+  }
+})
+
+router.get("/login", (req, res, next) =>{
+  try {
+    res.render("./auth/login.ejs", {url:req.protocol+"://"+req.headers.host})
+    
+  } catch (error) {
+    
+  }
+})
+
+router.get("/signup", (req, res, next) =>{
+  try {
+    res.render("./auth/signup.ejs", {url:req.protocol+"://"+req.headers.host})
+  } catch (error) {
+    
+  }
+})
 
 router.get("/login", (req, res, next) =>{
   try {

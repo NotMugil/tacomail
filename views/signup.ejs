@@ -6,7 +6,7 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="<%=url%>/css/output.css">
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
@@ -25,16 +25,17 @@
                 <h2 class="mt-2 font-semibold text-2xl">Welcome! Let’s get you started</h2>
                 <p>Create your account by filling out the details below</p>
             </div>
-            <div class=" xl:mx-28 mt-5">
+            <div class=" xl:mx-28 mt-5 ">
                 <form action="">
+                    <label class="font-medium flex justify-start">Username</label>
+                    <input type="text" class="bg-gray-300 rounded w-full  flex justify-start  h-8"><br>
                     <label class="font-medium flex justify-start">Email</label>
                     <input type="text" class="bg-gray-300 rounded w-full  flex justify-start  h-8"><br>
                     <label class="font-medium flex justify-start">Password</label>
                     <input type="text" class="bg-gray-300 rounded w-full flex justify-start  h-8"><br>
-                    <button class="bg-orange-500 rounded-md w-full mb-4 h-8 text-white">Login</button>
-                    <p class="mt-1 hidden lg:inline  ">Don’t have an account yet?</p>
-                    <a href="" class="ml-1 text-orange-500 hidden lg:inline">Sign Up</a>
-                    <a href="" class="text-orange-500 lg:hidden ">I don’t have an account</a>
+                    <button class="bg-orange-500 rounded-md w-full xl:ml-0 mb-4  h-8 text-white">Sign Up</button>
+                    <p class="mt-1 inline">Already have an account?</p>
+                    <a href="" class="ml-1 text-orange-500 inline">Login</a>
                     
                 </form>
             </div>

@@ -30,7 +30,7 @@ router.get("/home", (req, res, next) =>{
 
 router.get("/dashboard", (req, res, next) =>{
   try {
-    res.render("dashBoard.ejs", {url:req.protocol+"://"+req.headers.host})
+    res.render("dashboard.ejs", {url:req.protocol+"://"+req.headers.host})
     
   } catch (error) {
     

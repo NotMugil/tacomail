@@ -39,7 +39,7 @@ router.get("/dashboard", (req, res, next) =>{
 
 router.get("/login", (req, res, next) =>{
   try {
-    res.render("login.ejs", {url:req.protocol+"://"+req.headers.host})
+    res.render("./auth/login.ejs", {url:req.protocol+"://"+req.headers.host})
     
   } catch (error) {
     
@@ -48,7 +48,7 @@ router.get("/login", (req, res, next) =>{
 
 router.get("/signup", (req, res, next) =>{
   try {
-    res.render("signup.ejs", {url:req.protocol+"://"+req.headers.host})
+    res.render("./auth/signup.ejs", {url:req.protocol+"://"+req.headers.host})
   } catch (error) {
     
   }

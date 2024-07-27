@@ -39,16 +39,7 @@ app.use((err,req,res,next)=>{
   }
 })
 
-// app.get('/', (req,res) => {
-//   res.render("about.ejs", {url:req.protocol+"://"+req.headers.host})
-
-// })
-
-
-
 
 // Server listen
 const port = process.env.PORT || 5000;
-app.listen(port,()=>{
-  console.log("Server is running in 5000")
-});
+app.listen(port,()=>'Server is Running');

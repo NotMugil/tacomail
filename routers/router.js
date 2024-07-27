@@ -20,5 +20,29 @@ router.get("/eg", (req, res, next) =>{
 })
 
 
+router.get("/login", (req, res, next) =>{
+  try {
+    res.render("login.ejs", {url:req.protocol+"://"+req.headers.host})
+    
+  } catch (error) {
+    console.log(error)
+    
+  }
+})
+
+
+
+router.get("/signup", (req, res, next) =>{
+  try {
+    res.render("signup.ejs", {url:req.protocol+"://"+req.headers.host})
+    
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
+
+
 
 module.exports = router;

@@ -21,7 +21,7 @@ const config: Config = {
         mono: ["Fira Code", "monospace"],
       },
     },
-  },s
+  },
   plugins: [],
 };
 export default config;

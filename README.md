@@ -31,7 +31,8 @@ Head to our website at [www.tacomail.com](http://www.tacomail.com) .
 
 Now after you have successfully signed up your user account , you will be redirected to your dashboard page where you will be given the option to go through the walkthrough , where we will guide through the different steps which will eventually make you to create and start a campaign using the various templates we offer to meet your needs.
 
-You can also skip the walkthrough if you are already familiar with starting a campaign.
+  > [!NOTE]
+  > You can also skip the walkthrough if you are already familiar with starting a campaign.
 
 | **Dashboard**                                                       |
 | --------------------------------------------------------------------|

@@ -38,7 +38,8 @@ Now after you have successfully signed up your user account , you will be redire
 | --------------------------------------------------------------------|
 | ![Subscribers Desktop.png](./attachments/Subscribers_Desktop_1.png) |
 
-### You can then use the navigation bar located on the left panel to manage your subscribers list using this tab
+> You can then use the navigation bar located on the left panel to manage your subscribers list using this tab
+
 | **Showcase subscribers listing**                                                    |
 | ------------------------------------------------------------------------------------|
 |![Listing Subscribers Desktop 1.png](./attachments/Listing_Subscribers_Desktop_1.png)|
@@ -48,3 +49,8 @@ Here you have the choice to Import an already existing csv file having a list of
 | **Campaign Template Editor**                                          | 
 | --------------------------------------------------------------------- |
 | ![Subscribers Desktop 2.png](./attachments/Subscribers_Desktop_2.png) |
+
+
+## License
+
+See the [LICENSE](./LICENSE) file for licensing information.

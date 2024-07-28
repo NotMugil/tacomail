@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/NotMugil/Experimentarium/1eff0079039df4174f6029f3ea0bd1da53cb3b32/tacomail.svg?token=AUXANLQNB6A5QFTMTMQQSD3GUW3J4" width="500" alt="Logo"/><br/>
+  <img src="attachements/tacomail.svg" width="500" alt="Logo"/><br/>
   <h3>your content’s journey simplified</h3>
   <p>open-source web application designed for bulk email sending and content management.
 <!--   <p align="center"><a href="">s</a> · <a href="">d</a> · <a href="">a</a></p> 	 -->
@@ -33,16 +33,13 @@ Now after you have successfully signed up your user account , you will be redire
 
 You can also skip the walkthrough if you are already familiar with starting a campaign.
 
-![Subscribers Desktop (1).png](./attachments/Subscribers%20Desktop%20(1).png)
+![Subscribers Desktop.png](./attachments/Subscribers%20Desktop%20(1).png)
 
 ### You can then use the navigation bar located on the left panel to manage your subscribers list using this tab
 
-![Listing Subscribers Desktop (1).png](./attachments/Listing%20Subscribers%20Desktop%20(1).png)
+![Listing Subscribers Desktop 1.png](./attachments/Listing%20Subscribers%20Desktop%20(1).png)
 
 Here you have the choice to Import an already existing csv file having a list of subscribers , add subscribers individually, download or delete subscribers. While creating campaign we offer 5 standard templates by default , but if you want to add your own custom template they may do so by giving the raw html code which will be used as a template.
 
-![Subscribers Desktop (2).png](./attachments/Subscribers%20Desktop%20(2).png)
+![Subscribers Desktop 2.png](./attachments/Subscribers%20Desktop%20(2).png)
 
-![Signup Page Desktop.png](./attachments/Signup%20Page%20Desktop.png)
-
-![Login Page Mobile.png](./attachments/Login%20Page%20Mobile.png)

@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="attachements/tacomail.svg" width="500" alt="Logo"/><br/>
+  <img src="https://github.com/NotMugil/tacomail/blob/b14a0aa475c2c6052915e1107a72fc2d9bdbc946/attachments/tacomail.svg" width="500" alt="Logo"/><br/>
   <h3>your content’s journey simplified</h3>
   <p>open-source web application designed for bulk email sending and content management.
 <!--   <p align="center"><a href="">s</a> · <a href="">d</a> · <a href="">a</a></p> 	 -->

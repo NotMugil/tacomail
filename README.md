@@ -45,6 +45,6 @@ Now after you have successfully signed up your user account , you will be redire
 
 Here you have the choice to Import an already existing csv file having a list of subscribers , add subscribers individually, download or delete subscribers. While creating campaign we offer 5 standard templates by default , but if you want to add your own custom template they may do so by giving the raw html code which will be used as a template.
 
-| **Campaign Template Editor                                            | 
+| **Campaign Template Editor**                                          | 
 | --------------------------------------------------------------------- |
 | ![Subscribers Desktop 2.png](./attachments/Subscribers_Desktop_2.png) |

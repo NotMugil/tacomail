@@ -1,0 +1,1478 @@
+<!doctype html>
+<!-- dir="rtl" for RTL support -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+    <title>Campaigns-Tacomail</title>
+
+    <!-- Inter web font from bunny.net (GDPR compliant) -->
+    <link rel="preconnect" href="https://fonts.bunny.net" />
+    <link
+      href="https://fonts.bunny.net/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS Play CDN (mainly for development/testing purposes) -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+
+    <!-- Tailwind CSS v3 Configuration -->
+    <script>
+      const defaultTheme = tailwind.defaultTheme;
+      const colors = tailwind.colors;
+      const plugin = tailwind.plugin;
+
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", ...defaultTheme.fontFamily.sans],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Alpine Core -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- Alpine x-cloak style (https://alpinejs.dev/directives/cloak) -->
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div x-data="{ mobileSidebarOpen: false, desktopSidebarOpen: true }">
+        <!-- Page Container -->
+        <div
+          id="page-container"
+          class="mx-auto flex min-h-screen w-full min-w-[320px] flex-col bg-white lg:ps-64"
+          x-bind:class="{ 'lg:ps-64': desktopSidebarOpen }"
+        >
+          <!-- Page Sidebar -->
+          <nav
+            id="page-sidebar"
+            class="fixed bottom-0 start-0 top-0 z-50 flex h-full w-80 flex-col overflow-auto bg-[#EEF0FA] transition-transform duration-500 ease-out lg:w-64 lg:translate-x-0"
+            x-bind:class="{
+              'ltr:-translate-x-full rtl:translate-x-full': !mobileSidebarOpen,
+              'translate-x-0': mobileSidebarOpen,
+              'ltr:lg:-translate-x-full rtl:lg:translate-x-full': !desktopSidebarOpen,
+              'ltr:lg:translate-x-0 rtl:lg:translate-x-0': desktopSidebarOpen,
+            }"
+            aria-label="Main Sidebar Navigation"
+            x-cloak
+          >
+            <!-- Sidebar Header -->
+            <div
+              class="flex h-20 w-full flex-none items-center justify-between px-8"
+            >
+              <!-- Brand -->
+
+              <img class="mx-auto mt-4 h-auto w-full" src="https://res.cloudinary.com/dr8g09icb/image/upload/v1726605393/Frame_ic6x7n.png" alt="TacoMail">
+              <!-- <a
+                href="javascript:void(0)"
+                class="inline-flex items-center gap-2 text-lg font-medium tracking-wide text-slate-800 transition hover:opacity-75 active:opacity-100"> -->
+                <!-- <svg
+                  class="hi-mini hi-cursor-arrow-ripple inline-block h-5 w-5 text-amber-600"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M6.111 11.89A5.5 5.5 0 1115.501 8 .75.75 0 1017 8a7 7 0 10-11.95 4.95.75.75 0 001.06-1.06zm2.121-5.658a2.5 2.5 0 000 3.536.75.75 0 11-1.06 1.06A4 4 0 1114 8a.75.75 0 01-1.5 0 2.5 2.5 0 00-4.268-1.768zm2.534 1.279a.75.75 0 00-1.37.364l-.492 6.861a.75.75 0 001.204.65l1.043-.799.985 3.678a.75.75 0 001.45-.388l-.978-3.646 1.292.204a.75.75 0 00.74-1.16l-3.874-5.764z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <span>Tail<span class="font-bold">Lead</span></span> -->
+              <!-- </a> -->
+              <!-- END Brand -->
+      
+              <!-- Close Sidebar on Mobile -->
+              <div class="lg:hidden">
+                <button
+                  type="button"
+                  class="flex h-10 w-10 items-center justify-center text-slate-400 hover:text-slate-600 active:text-slate-400"
+                  x-on:click="mobileSidebarOpen = false"
+                >
+                  <svg
+                    class="hi-solid hi-x -mx-1 inline-block h-5 w-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <!-- END Close Sidebar on Mobile -->
+            </div>
+            <!-- END Sidebar Header -->
+      
+            <!-- Main Navigation -->
+            <div>
+              <ul class="w-full grow space-y-5 px-6 py-10">
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                                      class="inline-flex items-center gap-4 rounded-lg w-52 h-8 px-2 py-1 text-sm font-semibold text-slate-600 transition hover:text-amber-500">
+                  <div>
+                    <svg width="18" height="18" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4.13202 4C3.60159 4 3.09288 4.21071 2.71781 4.58579C2.34273 4.96086 2.13202 5.46957 2.13202 6V7H18.132V6C18.132 5.46957 17.9213 4.96086 17.5462 4.58579C17.1712 4.21071 16.6625 4 16.132 4H4.13202Z" fill="none" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M18.132 9H2.13202V14C2.13202 14.5304 2.34273 15.0391 2.71781 15.4142C3.09288 15.7893 3.60159 16 4.13202 16H16.132C16.6625 16 17.1712 15.7893 17.5462 15.4142C17.9213 15.0391 18.132 14.5304 18.132 14V9ZM4.13202 13C4.13202 12.7348 4.23738 12.4804 4.42491 12.2929C4.61245 12.1054 4.8668 12 5.13202 12H6.13202C6.39724 12 6.65159 12.1054 6.83913 12.2929C7.02666 12.4804 7.13202 12.7348 7.13202 13C7.13202 13.2652 7.02666 13.5196 6.83913 13.7071C6.65159 13.8946 6.39724 14 6.13202 14H5.13202C4.8668 14 4.61245 13.8946 4.42491 13.7071C4.23738 13.5196 4.13202 13.2652 4.13202 13ZM9.13202 12C8.8668 12 8.61245 12.1054 8.42491 12.2929C8.23738 12.4804 8.13202 12.7348 8.13202 13C8.13202 13.2652 8.23738 13.5196 8.42491 13.7071C8.61245 13.8946 8.8668 14 9.13202 14H10.132C10.3972 14 10.6516 13.8946 10.8391 13.7071C11.0267 13.5196 11.132 13.2652 11.132 13C11.132 12.7348 11.0267 12.4804 10.8391 12.2929C10.6516 12.1054 10.3972 12 10.132 12H9.13202Z" fill="none" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      
+                  </div>
+                    <span>Dashboard</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="inline-flex items-center gap-4 rounded-lg shadow-lg w-52 h-8 bg-white px-2 py-1 text-sm font-semibold transition"
+                  >
+                  <div>
+                    <svg width="16" height="18" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14.1835 3.73889L15.5898 2.33265C16.2 1.72245 17.1893 1.72245 17.7995 2.33265C18.4097 2.94284 18.4097 3.93216 17.7995 4.54235L5.82563 16.5162C5.38506 16.9568 4.84167 17.2806 4.24455 17.4585L2.00714 18.125L2.67362 15.8876C2.8515 15.2905 3.17535 14.7471 3.61591 14.3065L14.1835 3.73889ZM14.1835 3.73889L16.3821 5.93749" stroke="#F5A200" stroke-width="1.5552" stroke-linecap="round" stroke-linejoin="round" fill="#F5A200"/>
+                      </svg>
+                      
+                  </div>
+                    <span>Campaigns</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="inline-flex items-center gap-4 rounded-lg w-52 h-8 px-2 py-1 text-sm font-semibold text-slate-600 transition hover:text-amber-500"
+                  >
+                  <div>
+                    <svg width="18" height="18" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M15.132 15.5993C15.3382 15.6163 15.5468 15.625 15.7575 15.625C16.6311 15.625 17.4698 15.4756 18.2495 15.201C18.2548 15.1347 18.2575 15.0677 18.2575 15C18.2575 13.6193 17.1382 12.5 15.7575 12.5C15.2345 12.5 14.749 12.6606 14.3476 12.9352M15.132 15.5993C15.132 15.6079 15.132 15.6164 15.132 15.625C15.132 15.8125 15.1217 15.9976 15.1016 16.1797C13.6376 17.0197 11.9409 17.5 10.132 17.5C8.32313 17.5 6.62641 17.0197 5.16244 16.1797C5.14234 15.9976 5.13202 15.8125 5.13202 15.625C5.13202 15.6165 5.13204 15.6079 5.13208 15.5994M15.132 15.5993C15.127 14.6188 14.8399 13.7051 14.3476 12.9352M14.3476 12.9352C13.4594 11.546 11.9032 10.625 10.132 10.625C8.36101 10.625 6.80506 11.5458 5.91676 12.9347M5.91676 12.9347C5.51554 12.6604 5.03032 12.5 4.50763 12.5C3.12692 12.5 2.00763 13.6193 2.00763 15C2.00763 15.0677 2.01032 15.1347 2.0156 15.201C2.79529 15.4756 3.63402 15.625 4.50763 15.625C4.71791 15.625 4.92618 15.6163 5.13208 15.5994M5.91676 12.9347C5.42427 13.7047 5.137 14.6187 5.13208 15.5994M12.632 5.625C12.632 7.00571 11.5127 8.125 10.132 8.125C8.75131 8.125 7.63202 7.00571 7.63202 5.625C7.63202 4.24429 8.75131 3.125 10.132 3.125C11.5127 3.125 12.632 4.24429 12.632 5.625ZM17.632 8.125C17.632 9.16053 16.7926 10 15.757 10C14.7215 10 13.882 9.16053 13.882 8.125C13.882 7.08947 14.7215 6.25 15.757 6.25C16.7926 6.25 17.632 7.08947 17.632 8.125ZM6.38202 8.125C6.38202 9.16053 5.54255 10 4.50702 10C3.47149 10 2.63202 9.16053 2.63202 8.125C2.63202 7.08947 3.47149 6.25 4.50702 6.25C5.54255 6.25 6.38202 7.08947 6.38202 8.125Z" stroke="#0F172A" stroke-width="1.5552" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      
+                  </div>
+                    <span>Subscribers</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="inline-flex items-center gap-4 rounded-lg w-52 h-8 px-2 py-1 text-sm font-semibold text-slate-600 transition hover:text-amber-500"
+                  >
+                  <div>
+                    <svg width="16" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1834 2.73889L14.5897 1.33265C15.1999 0.722451 16.1892 0.722451 16.7994 1.33265C17.4096 1.94284 17.4096 2.93216 16.7994 3.54235L4.82551 15.5162C4.38494 15.9568 3.84155 16.2806 3.24443 16.4585L1.00702 17.125L1.6735 14.8876C1.85137 14.2905 2.17522 13.7471 2.61579 13.3065L13.1834 2.73889ZM13.1834 2.73889L15.382 4.93749" stroke="#0F172A" stroke-width="1.5552" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      
+                  </div>
+                    <span>Content Manager</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="inline-flex items-center gap-4 rounded-lg w-52 h-8 px-2 py-1 text-sm font-semibold text-slate-600 transition hover:text-amber-500"
+                  >
+                  <div>
+                    <svg width="18" height="18" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.382 11.875V9.6875C16.382 8.1342 15.1228 6.875 13.5695 6.875H12.3195C11.8018 6.875 11.382 6.45527 11.382 5.9375V4.6875C11.382 3.1342 10.1228 1.875 8.56952 1.875H7.00702M8.88202 1.875H4.81952C4.30175 1.875 3.88202 2.29473 3.88202 2.8125V17.1875C3.88202 17.7053 4.30175 18.125 4.81952 18.125H15.4445C15.9623 18.125 16.382 17.7053 16.382 17.1875V9.375C16.382 5.23286 13.0242 1.875 8.88202 1.875Z" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>                  
+                  </div>
+                    <span>Docs</span>
+                  </a>
+                </li>
+                <li>
+                    <a
+                      href="javascript:void(0)"
+                      class="inline-flex items-center gap-4 rounded-lg w-52 h-8 px-2 py-1 text-sm font-semibold text-slate-600 transition hover:text-amber-500"
+                    >
+                    <div>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 16.5V19C15 20.1046 14.1046 21 13 21H6C4.89543 21 4 20.1046 4 19V5C4 3.89543 4.89543 3 6 3H13C14.1046 3 15 3.89543 15 5V8.0625M11 12H21M21 12L18.5 9.5M21 12L18.5 14.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>                  
+                    </div>
+                      <span>Logout</span>
+                    </a>
+                  </li>
+                  <li>
+                    
+                  </li>
+              </ul>
+              <div class="p-2" style="position: fixed; bottom: 0;">
+                <a href="#" class="bg-white flex flex-row h-16 w-56 m-2 p-1 justify-center rounded-lg shadow-lg">
+                    <!-- <div class="ml-1 mt-2">
+                      <img class="h-10 w-10" src=">                
+                    </div>
+                    <div class="mt-1 ml-3 mb-2">
+                      <div><p>Nirmal Eeswar</p></div><div><p>nevernirmal@gmail.com</p></div>
+                    </div> -->
+                    <div class="flex items-center gap-3">
+                        <img class="w-10 h-10 rounded-full" src="https://res.cloudinary.com/dr8g09icb/image/upload/v1726877019/WhatsApp_Image_2024-09-21_at_05.33.17_7d957032_xpdcjo.jpg" alt="RizzLord">
+                        <div class="cursor-pointer text-sm leading-5 font-bold dark:text-white">
+                            <div>Nirmal Eeswar</div>
+                            <div class="cursor-pointer text-sm font-medium leading-4 text-gray-500 dark:text-gray-400">cupid@gmail.com</div>
+                        </div>
+                    </div>
+    
+                  </a>
+              </div>
+            </ul>
+              <!-- <ul class="w-full grow space-y-1.5 px-8 py-4"> -->
+                <!-- <li> -->
+                  <!-- <a
+                    href="javascript:void(0)"
+                    class="inline-flex items-center gap-4 rounded-lg px-2 py-1 text-sm font-semibold text-slate-600 transition hover:bg-amber-100 hover:text-amber-900"
+                  > -->
+                    <!-- <span>Settings</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="javascript:void(0)"
+                    class="inline-flex items-center gap-2 rounded-lg px-2 py-1 text-sm font-semibold text-slate-600 transition hover:bg-indigo-100 hover:text-indigo-900"
+                  >
+                    <span>Logout</span>
+                  </a>
+                </li>
+              </ul> -->
+                
+            </div>
+            <!-- END Main Navigation -->
+        </nav>
+          <!-- Page Sidebar -->
+
+          <!-- Page Header -->
+          <header
+            id="page-header"
+            class="fixed end-0 start-0 top-0 z-30 flex h-20 flex-none items-center border-b border-slate-100 bg-white/90 backdrop-blur-sm"
+            x-bind:class="{ 'lg:ps-64': desktopSidebarOpen }"
+          >
+            <div
+              class="container mx-auto flex justify-between px-4 lg:px-8 xl:max-w-7xl"
+            >
+              <!-- Left Section -->
+              <div class="flex items-center">
+                <!-- Toggle Sidebar on Mobile -->
+                <div class="me-2 lg:hidden">
+                  <button
+                    type="button"
+                    class="inline-flex items-center justify-center rounded-lg border-slate-100 bg-slate-100 px-2.5 py-2 font-semibold leading-6 text-slate-800 hover:border-slate-200 hover:bg-slate-200 hover:text-slate-800 focus:outline-none focus:ring focus:ring-amber-500/25 active:border-slate-100 active:bg-slate-100"
+                    x-on:click="mobileSidebarOpen = true"
+                  >
+                    <svg
+                      class="hi-solid hi-menu-alt-1 inline-block h-5 w-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <!-- END Toggle Sidebar on Mobile -->
+      
+                <!-- Toggle Sidebar on Desktop -->
+                <div class="hidden lg:block">
+                  <button
+                    type="button"
+                    class="inline-flex items-center justify-center rounded-lg border-slate-100 bg-slate-100 px-2.5 py-2 font-semibold leading-6 text-slate-800 hover:border-slate-200 hover:bg-slate-200 hover:text-slate-800 focus:outline-none focus:ring focus:ring-amber-500/25 active:border-slate-100 active:bg-slate-100"
+                    x-on:click="desktopSidebarOpen = !desktopSidebarOpen"
+                  >
+                    <svg
+                      class="hi-solid hi-menu-alt-1 inline-block h-5 w-5"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <!-- END Toggle Sidebar on Desktop -->
+              </div>
+              <!-- END Left Section -->
+      
+              <!-- Middle Section -->
+              <div class="flex items-center gap-2 lg:hidden">
+                <!-- Brand -->
+                <a
+                  href="javascript:void(0)"
+                  class="inline-flex items-center gap-2 text-lg font-medium tracking-wide text-slate-800 transition hover:opacity-75 active:opacity-100"
+                >
+                  <svg
+                    class="hi-mini hi-cursor-arrow-ripple inline-block h-5 w-5 text-amber-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M6.111 11.89A5.5 5.5 0 1115.501 8 .75.75 0 1017 8a7 7 0 10-11.95 4.95.75.75 0 001.06-1.06zm2.121-5.658a2.5 2.5 0 000 3.536.75.75 0 11-1.06 1.06A4 4 0 1114 8a.75.75 0 01-1.5 0 2.5 2.5 0 00-4.268-1.768zm2.534 1.279a.75.75 0 00-1.37.364l-.492 6.861a.75.75 0 001.204.65l1.043-.799.985 3.678a.75.75 0 001.45-.388l-.978-3.646 1.292.204a.75.75 0 00.74-1.16l-3.874-5.764z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+                <!-- END Brand -->
+              </div>
+              <!-- END Middle Section -->
+      
+              <!-- Right Section -->
+              <div class="flex items-center gap-2">
+                <!-- Settings -->
+                <a
+                  href="javascript:void(0)"
+                  class="inline-flex items-center justify-center rounded-lg border-slate-100 bg-slate-100 px-2.5 py-2 font-semibold leading-6 text-slate-800 hover:border-slate-200 hover:bg-slate-200 hover:text-slate-800 focus:outline-none focus:ring focus:ring-amber-500/25 active:border-slate-100 active:bg-slate-100"
+                >
+                  <svg
+                    class="hi-mini hi-cog-6-tooth inline-block h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M7.84 1.804A1 1 0 018.82 1h2.36a1 1 0 01.98.804l.331 1.652a6.993 6.993 0 011.929 1.115l1.598-.54a1 1 0 011.186.447l1.18 2.044a1 1 0 01-.205 1.251l-1.267 1.113a7.047 7.047 0 010 2.228l1.267 1.113a1 1 0 01.206 1.25l-1.18 2.045a1 1 0 01-1.187.447l-1.598-.54a6.993 6.993 0 01-1.929 1.115l-.33 1.652a1 1 0 01-.98.804H8.82a1 1 0 01-.98-.804l-.331-1.652a6.993 6.993 0 01-1.929-1.115l-1.598.54a1 1 0 01-1.186-.447l-1.18-2.044a1 1 0 01.205-1.251l1.267-1.114a7.05 7.05 0 010-2.227L1.821 7.773a1 1 0 01-.206-1.25l1.18-2.045a1 1 0 011.187-.447l1.598.54A6.993 6.993 0 017.51 3.456l.33-1.652zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+                <!-- END Toggle Sidebar on Mobile -->
+              </div>
+              <!-- END Right Section -->
+            </div>
+          </header>
+          <!-- END Page Header -->
+      
+          <!-- Page Content -->
+          <main
+            id="page-content"
+            class="flex max-w-full flex-auto flex-col pt-20"
+          >
+            <!-- Page Section -->
+            <div
+              class="container mx-auto space-y-10 px-4 py-8 lg:space-y-16 lg:px-8 lg:py-6 xl:max-w-7xl"
+            >
+              <!-- Quick Stats -->
+              <div>
+                <h2 class="mb-8 text-2xl font-semibold">Campaigns</h2>
+                <div
+                  class="grid grid-cols-1 gap-2 lg:grid-cols-6 lg:gap-6 xl:grid-cols-6">
+                  
+                  <button class="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 border rounded shadow">
+                    Published
+                  </button>
+
+                  <button class="bg-transparent hover:bg-amber-500 text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded shadow">
+                    Scheduled
+                  </button>
+
+                  <button class="bg-transparent hover:bg-amber-500 text-black font-semibold hover:text-white py-2 px-4 border border-black hover:border-transparent rounded shadow">
+                    Draft
+                  </button>
+
+                  <button class="bg-transparent border border-black py-2 px-10 ml-16">
+                    <a
+                    href="javascript:void(0)"
+                    class="inline-flex items-center gap-4 rounded-lg w-52 h-8 px-2 py-1 text-base font-semibold text-slate-600 transition hover:text-amber-500"
+                  >
+                  <div>
+                    <!-- <svg width="16" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1834 2.73889L14.5897 1.33265C15.1999 0.722451 16.1892 0.722451 16.7994 1.33265C17.4096 1.94284 17.4096 2.93216 16.7994 3.54235L4.82551 15.5162C4.38494 15.9568 3.84155 16.2806 3.24443 16.4585L1.00702 17.125L1.6735 14.8876C1.85137 14.2905 2.17522 13.7471 2.61579 13.3065L13.1834 2.73889ZM13.1834 2.73889L15.382 4.93749" stroke="#0F172A" stroke-width="1.5552" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg> -->
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Edit / Sort_Ascending"> <path id="Vector" d="M4 17H10M4 12H13M18 11V19M18 19L21 16M18 19L15 16M4 7H16" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
+                      
+                  </div>
+                    <span class="font-bold">Sort</span>
+                  </a>
+                  </button>
+
+                  <button class="bg-transparent border border-black py-2 px-10 ml-16">
+                    <a href="javascript:void(0)" class="inline-flex items-center gap-4 rounded-lg text-sm font-semibold text-slate-600 transition hover:text-amber-500">
+                        <p>Bulk Options</p>
+                      </a>
+                  </button>
+
+                  <button class="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2 px-4 border rounded shadow">
+                    Add Campaign
+                  </button>
+                  
+                  
+                  <!-- New Leads Card -->
+                  <!-- <a
+                    href="javascript:void(0)"
+                    class="group flex flex-col overflow-hidden rounded-2xl bg-pink-50 transition hover:bg-pink-100 active:bg-pink-50"
+                  >
+                    <div class="flex grow items-center justify-between p-6">
+                      <dl>
+                        <dt class="text-2xl font-bold text-pink-600">10</dt>
+                        <dd class="text-sm font-medium text-pink-900">
+                          New Leads
+                        </dd>
+                      </dl>
+                      <svg
+                        class="hi-mini hi-arrow-uturn-up inline-block h-10 w-10 text-pink-300"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M17.768 7.793a.75.75 0 01-1.06-.025L12.75 3.622v10.003a5.375 5.375 0 01-10.75 0V10.75a.75.75 0 011.5 0v2.875a3.875 3.875 0 007.75 0V3.622L7.293 7.768a.75.75 0 01-1.086-1.036l5.25-5.5a.75.75 0 011.085 0l5.25 5.5a.75.75 0 01-.024 1.06z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </a> -->
+                  <!-- END New Leads Card -->
+      
+                  <!-- Campaign Card -->
+                  <!-- <a
+                    href="javascript:void(0)"
+                    class="group flex flex-col overflow-hidden rounded-2xl shadow-lg bg-sky-50 transition hover:bg-sky-100 active:bg-sky-50"
+                  >
+                    <div class="flex grow items-center justify-between p-6">
+                      <dl>
+                        <dt class="text-2xl font-bold text-sky-600">4</dt>
+                        <dd class="text-sm font-medium text-sky-900">Campaigns</dd>
+                      </dl>
+                      <svg width="40" height="32" viewBox="0 0 40 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M32 17.917V14.0837H40V17.917H32ZM34.4 31.3337L28 26.7337L30.4 23.667L36.8 28.267L34.4 31.3337ZM30.4 8.33366L28 5.26699L34.4 0.666992L36.8 3.73366L30.4 8.33366ZM6 29.417V21.7503H4C2.9 21.7503 1.95867 21.3753 1.176 20.6252C0.393333 19.8752 0.00133333 18.9724 0 17.917V14.0837C0 13.0295 0.392 12.1274 1.176 11.3773C1.96 10.6273 2.90133 10.2516 4 10.2503H12L22 4.50033V27.5003L12 21.7503H10V29.417H6ZM24 22.4212V9.57949C24.9 10.3462 25.6253 11.2809 26.176 12.3836C26.7267 13.4863 27.0013 14.6919 27 16.0003C26.9987 17.3088 26.7233 18.515 26.174 19.619C25.6247 20.723 24.9 21.657 24 22.4212Z" fill="#0284c7"/> 
+                        </svg>
+                    </div>
+                  </a> -->
+                  <!-- END Projects Card -->
+      
+                  <!-- Tickets Card -->
+                  <!-- <a
+                    href="javascript:void(0)"
+                    class="group flex flex-col overflow-hidden rounded-2xl bg-purple-50 transition hover:bg-purple-100 active:bg-purple-50"
+                  >
+                    <div class="flex grow items-center justify-between p-6">
+                      <dl>
+                        <dt class="text-2xl font-bold text-purple-600">6</dt>
+                        <dd class="text-sm font-medium text-purple-900">
+                          Tickets
+                        </dd>
+                      </dl>
+                      <svg
+                        class="hi-mini hi-lifebuoy inline-block h-10 w-10 text-purple-300"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M7.171 4.146l1.947 2.466a3.514 3.514 0 011.764 0l1.947-2.466a6.52 6.52 0 00-5.658 0zm8.683 3.025l-2.466 1.947c.15.578.15 1.186 0 1.764l2.466 1.947a6.52 6.52 0 000-5.658zm-3.025 8.683l-1.947-2.466c-.578.15-1.186.15-1.764 0l-1.947 2.466a6.52 6.52 0 005.658 0zM4.146 12.83l2.466-1.947a3.514 3.514 0 010-1.764L4.146 7.171a6.52 6.52 0 000 5.658zM5.63 3.297a8.01 8.01 0 018.738 0 8.031 8.031 0 012.334 2.334 8.01 8.01 0 010 8.738 8.033 8.033 0 01-2.334 2.334 8.01 8.01 0 01-8.738 0 8.032 8.032 0 01-2.334-2.334 8.01 8.01 0 010-8.738A8.03 8.03 0 015.63 3.297zm5.198 4.882a2.008 2.008 0 00-2.243.407 1.994 1.994 0 00-.407 2.243 1.993 1.993 0 00.992.992 2.008 2.008 0 002.243-.407c.176-.175.31-.374.407-.585a2.008 2.008 0 00-.407-2.243 1.993 1.993 0 00-.585-.407z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  </a> -->
+                  <!-- END Tickets Card -->
+                  <!-- Subscribers Card -->
+                  <!-- <a
+                    href="javascript:void(0)"
+                    class="group flex flex-col overflow-hidden rounded-2xl shadow-lg bg-orange-50 transition hover:bg-orange-100 active:bg-orange-50"
+                  >
+                    <div class="flex grow items-center justify-between p-6">
+                      <dl>
+                        <dt class="text-2xl font-bold text-orange-600">5</dt>
+                        <dd class="text-sm font-medium text-orange-900">
+                          Subscribers
+                        </dd>
+                      </dl>
+                      <svg
+                        class="hi-mini hi-user-group inline-block h-10 w-10 text-orange-300"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M10 9a3 3 0 100-6 3 3 0 000 6zM6 8a2 2 0 11-4 0 2 2 0 014 0zM1.49 15.326a.78.78 0 01-.358-.442 3 3 0 014.308-3.516 6.484 6.484 0 00-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 01-2.07-.655zM16.44 15.98a4.97 4.97 0 002.07-.654.78.78 0 00.357-.442 3 3 0 00-4.308-3.517 6.484 6.484 0 011.907 3.96 2.32 2.32 0 01-.026.654zM18 8a2 2 0 11-4 0 2 2 0 014 0zM5.304 16.19a.844.844 0 01-.277-.71 5 5 0 019.947 0 .843.843 0 01-.277.71A6.975 6.975 0 0110 18a6.974 6.974 0 01-4.696-1.81z"
+                        />
+                      </svg>
+                    </div>
+                  </a> -->
+                  <!-- END Customers Card -->
+                  <!-- Messages Card -->
+                  <!-- <a
+                    href="javascript:void(0)"
+                    class="group flex flex-col overflow-hidden rounded-2xl shadow-lg bg-teal-50 transition hover:bg-teal-100 active:bg-teal-50"
+                  >
+                    <div class="flex grow items-center justify-between p-6">
+                      <dl>
+                        <dt class="text-2xl font-bold text-teal-600">3628</dt>
+                        <dd class="text-sm font-medium text-teal-900">
+                          Messages Sent
+                        </dd>
+                      </dl>
+                      <svg class="hi-mini hi-user-group inline-block h-10 w-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke="#5eead4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <rect x="3" y="5" width="18" height="14" rx="2" stroke="#5eead4" stroke-width="2" stroke-linecap="round"></rect> </g></svg>
+                    </div>
+                  </a> -->
+                  <!-- End of Messages Card -->
+                  <!-- Sales Card -->
+                  <!-- <a
+                    href="javascript:void(0)"
+                    class="group flex flex-col overflow-hidden rounded-2xl bg-emerald-50 transition hover:bg-emerald-100 active:bg-emerald-50 xl:col-span-2"
+                  >
+                    <div class="flex grow items-center justify-between p-6">
+                      <dl>
+                        <dt class="text-2xl font-bold text-emerald-600">256</dt>
+                        <dd class="text-sm font-medium text-emerald-900">
+                          Sales in the last 10 days
+                        </dd>
+                      </dl>
+                      <svg
+                        class="hi-mini hi-chart-pie inline-block h-10 w-10 text-emerald-300"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M12 9a1 1 0 01-1-1V3c0-.553.45-1.008.997-.93a7.004 7.004 0 015.933 5.933c.078.547-.378.997-.93.997h-5z"
+                        />
+                        <path
+                          d="M8.003 4.07C8.55 3.992 9 4.447 9 5v5a1 1 0 001 1h5c.552 0 1.008.45.93.997A7.001 7.001 0 012 11a7.002 7.002 0 016.003-6.93z"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <svg
+                        class="w-auto text-emerald-200"
+                        fill="currentColor"
+                        viewBox="0 0 1000 500"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M 0 493.9109719606716 C 14.200000000000001 490.40802978683513 42.60000000000001 487.5791262811064 71 476.39626109148924 C 99.4 465.21339590187205 113.6 453.15974467495977 142 437.99664601258576 C 170.4 422.8335473502118 184.6 406.98651600999744 213 400.58076777961935 C 241.4 394.17501954924126 255.6 416.4756240849917 284 405.9679048606953 C 312.4 395.46018563639893 326.6 358.32287941899733 355 348.0421716581375 C 383.4 337.7614638972776 397.6 368.4679124832968 426 354.5643660563959 C 454.4 340.660819629495 468.6 300.30672545627453 497 278.5244395236329 C 525.4 256.7421535909913 539.6 252.0730672209553 568 245.65293639318784 C 596.4 239.23280556542042 610.6 231.89211788080013 639 246.42378538479574 C 667.4 260.95545288879134 681.6 336.33567203932097 710 318.3112739131659 C 738.4 300.28687578701084 752.6 166.6854990107404 781 156.30179475402042 C 809.4 145.91809049730045 823.6 289.85843160308036 852 266.3927526295661 C 880.4 242.92707365605182 894.6 59.99402379966443 923 38.9733998864491 C 951.4 17.952775973233773 979.8 136.82638642808135 994 161.28963306348942 L 1000 500 L 0 500Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </div>
+                  </a> -->
+                  <!-- END Sales Card -->
+      
+                  <!-- Tickets Card -->
+                  <!-- <a
+                    href="javascript:void(0)"
+                    class="group flex flex-col overflow-hidden rounded-2xl bg-rose-50 transition hover:bg-rose-100 active:bg-rose-50 xl:col-span-2"
+                  >
+                    <div class="flex grow items-center justify-between p-6">
+                      <dl>
+                        <dt class="text-2xl font-bold text-rose-600">32</dt>
+                        <dd class="text-sm font-medium text-rose-900">
+                          Tickets in the last 10 days
+                        </dd>
+                      </dl>
+                      <svg
+                        class="hi-mini hi-lifebuoy inline-block h-10 w-10 text-rose-300"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M7.171 4.146l1.947 2.466a3.514 3.514 0 011.764 0l1.947-2.466a6.52 6.52 0 00-5.658 0zm8.683 3.025l-2.466 1.947c.15.578.15 1.186 0 1.764l2.466 1.947a6.52 6.52 0 000-5.658zm-3.025 8.683l-1.947-2.466c-.578.15-1.186.15-1.764 0l-1.947 2.466a6.52 6.52 0 005.658 0zM4.146 12.83l2.466-1.947a3.514 3.514 0 010-1.764L4.146 7.171a6.52 6.52 0 000 5.658zM5.63 3.297a8.01 8.01 0 018.738 0 8.031 8.031 0 012.334 2.334 8.01 8.01 0 010 8.738 8.033 8.033 0 01-2.334 2.334 8.01 8.01 0 01-8.738 0 8.032 8.032 0 01-2.334-2.334 8.01 8.01 0 010-8.738A8.03 8.03 0 015.63 3.297zm5.198 4.882a2.008 2.008 0 00-2.243.407 1.994 1.994 0 00-.407 2.243 1.993 1.993 0 00.992.992 2.008 2.008 0 002.243-.407c.176-.175.31-.374.407-.585a2.008 2.008 0 00-.407-2.243 1.993 1.993 0 00-.585-.407z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <svg
+                        class="w-auto text-rose-200"
+                        fill="currentColor"
+                        viewBox="0 0 1000 500"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M 0 491.97664735392186 C 14.2 487.6342321000262 42.599999999999994 479.4664419168693 71 470.26457108444356 C 99.4 461.0627002520178 113.6 460.88088046251244 142 445.967293191793 C 170.4 431.0537059210735 184.6 401.92769317557264 213 395.6966347308462 C 241.4 389.46557628611976 255.6 425.8825606617139 284 414.8120009681609 C 312.4 403.74144127460784 326.6 363.99447099184636 355 340.343836263081 C 383.4 316.6932015343157 397.6 303.4354664839433 426 296.5588273243342 C 454.4 289.68218816472506 468.6 313.94896637638396 497 305.96064046503545 C 525.4 297.97231455368694 539.6 258.86629470075934 568 256.61719776759156 C 596.4 254.36810083442379 610.6 314.6658746403039 639 294.7151557991966 C 667.4 274.76443695808933 681.6 173.183035720006 710 156.863603562055 C 738.4 140.54417140410402 752.6 214.65802978224644 781 213.11799500944176 C 809.4 211.57796023663707 823.6 150.70388385188858 852 149.16342969803156 C 880.4 147.62297554417455 894.6 213.57548048920893 923 205.4157242401567 C 951.4 197.25596799110446 979.8 127.77486361024759 994 108.36464845277033 L 1000 500 L 0 500Z"
+                        ></path>
+                      </svg>
+                    </div>
+                  </a> -->
+                  <!-- END Tickets Card -->
+                </div>
+              </div>
+              <!-- END Quick Stats -->
+      
+              <!-- Leads -->
+              <!-- <div>
+                <h2 class="mb-1 text-2xl font-semibold">Leads</h2>
+                <h3 class="mb-8 text-sm font-medium text-slate-600">
+                  You have 10 new leads, let's get to work!
+                </h3> -->
+                <!-- Responsive Table Container -->
+                <!-- <div class="min-w-full overflow-x-auto rounded"> -->
+                  <!-- Alternate Responsive Table -->
+                  <!-- <table class="min-w-full align-middle text-sm"> -->
+                    <!-- Table Header -->
+                    <!-- <thead>
+                      <tr class="border-b-2 border-slate-100">
+                        <th
+                          class="min-w-[180px] py-3 pe-3 text-start text-sm font-semibold uppercase tracking-wider text-slate-700"
+                        >
+                          Company
+                        </th>
+                        <th
+                          class="min-w-[180px] px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-slate-700"
+                        >
+                          Industry
+                        </th>
+                        <th
+                          class="min-w-[180px] px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-slate-700"
+                        >
+                          Location
+                        </th>
+                        <th
+                          class="px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-slate-700"
+                        >
+                          Funding
+                        </th>
+                        <th
+                          class="px-3 py-2 text-start text-sm font-semibold uppercase tracking-wider text-slate-700"
+                        >
+                          Contact
+                        </th>
+                        <th
+                          class="min-w-[180px] py-2 ps-3 text-start text-sm font-semibold uppercase tracking-wider text-slate-700"
+                        >
+                          Actions
+                        </th>
+                      </tr>
+                    </thead> -->
+                    <!-- END Table Header -->
+      
+                    <!-- Table Body -->
+                    <!-- <tbody>
+                      <tr class="border-b border-gray-100">
+                        <td class="py-3 pe-3 text-start">
+                          <a
+                            href="javascript:void(0)"
+                            class="font-medium text-indigo-500 hover:text-indigo-700"
+                            >Acme Inc.</a
+                          >
+                        </td>
+                        <td class="p-3 text-slate-600">Manufacturing</td>
+                        <td class="p-3 font-medium">Chicago, IL</td>
+                        <td class="p-3 text-start">
+                          <div
+                            class="inline-block rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold leading-4 text-emerald-800"
+                          >
+                            $10M
+                          </div>
+                        </td>
+                        <td class="p-3 font-medium">john.smith@acmeinc.com</td>
+                        <td class="py-3 ps-3 font-medium">
+                          <a
+                            href="javascript:void(0)"
+                            class="group inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 font-medium text-slate-800 transition duration-75 hover:border-indigo-300 hover:text-indigo-800 active:border-slate-200"
+                          >
+                            <span>Send Message</span>
+                            <svg
+                              class="hi-mini hi-arrow-right inline-block h-5 w-5 text-slate-400 transition duration-75 group-hover:text-indigo-600 group-active:translate-x-0.5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-gray-100 dark:border-slate-700/50"
+                      >
+                        <td class="py-3 pe-3 text-start">
+                          <a
+                            href="javascript:void(0)"
+                            class="font-medium text-indigo-500 hover:text-indigo-700"
+                            >XYZ Corporation</a
+                          >
+                        </td>
+                        <td class="p-3 text-slate-600">Technology</td>
+                        <td class="p-3 font-medium">San Francisco, CA</td>
+                        <td class="p-3 text-start">
+                          <div
+                            class="inline-block rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold leading-4 text-emerald-800"
+                          >
+                            $50M
+                          </div>
+                        </td>
+                        <td class="p-3 font-medium">jane.doe@xyzcorp.com</td>
+                        <td class="py-3 ps-3 font-medium">
+                          <a
+                            href="javascript:void(0)"
+                            class="group inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 font-medium text-slate-800 transition duration-75 hover:border-indigo-300 hover:text-indigo-800 active:border-slate-200"
+                          >
+                            <span>Send Message</span>
+                            <svg
+                              class="hi-mini hi-arrow-right inline-block h-5 w-5 text-slate-400 transition duration-75 group-hover:text-indigo-600 group-active:translate-x-0.5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-gray-100 dark:border-slate-700/50"
+                      >
+                        <td class="py-3 pe-3 text-start">
+                          <a
+                            href="javascript:void(0)"
+                            class="font-medium text-indigo-500 hover:text-indigo-700"
+                            >Smith & Associates</a
+                          >
+                        </td>
+                        <td class="p-3 text-slate-600">Consulting</td>
+                        <td class="p-3 font-medium">New York, NY</td>
+                        <td class="p-3 text-start">
+                          <div
+                            class="inline-block rounded-full bg-purple-100 px-2 py-1 text-xs font-semibold leading-4 text-purple-800"
+                          >
+                            $5M
+                          </div>
+                        </td>
+                        <td class="p-3 font-medium">
+                          david.lee@smithandassoc.com
+                        </td>
+                        <td class="py-3 ps-3 font-medium">
+                          <a
+                            href="javascript:void(0)"
+                            class="group inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 font-medium text-slate-800 transition duration-75 hover:border-indigo-300 hover:text-indigo-800 active:border-slate-200"
+                          >
+                            <span>Send Message</span>
+                            <svg
+                              class="hi-mini hi-arrow-right inline-block h-5 w-5 text-slate-400 transition duration-75 group-hover:text-indigo-600 group-active:translate-x-0.5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-gray-100 dark:border-slate-700/50"
+                      >
+                        <td class="py-3 pe-3 text-start">
+                          <a
+                            href="javascript:void(0)"
+                            class="font-medium text-indigo-500 hover:text-indigo-700"
+                            >Global Foods Ltd.</a
+                          >
+                        </td>
+                        <td class="p-3 text-slate-600">Food and Beverage</td>
+                        <td class="p-3 font-medium">London UK</td>
+                        <td class="p-3 text-start">
+                          <div
+                            class="inline-block rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold leading-4 text-emerald-800"
+                          >
+                            $20M
+                          </div>
+                        </td>
+                        <td class="p-3 font-medium">
+                          maria.rodriguez@globalfoods.com
+                        </td>
+                        <td class="py-3 ps-3 font-medium">
+                          <a
+                            href="javascript:void(0)"
+                            class="group inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 font-medium text-slate-800 transition duration-75 hover:border-indigo-300 hover:text-indigo-800 active:border-slate-200"
+                          >
+                            <span>Send Message</span>
+                            <svg
+                              class="hi-mini hi-arrow-right inline-block h-5 w-5 text-slate-400 transition duration-75 group-hover:text-indigo-600 group-active:translate-x-0.5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-gray-100 dark:border-slate-700/50"
+                      >
+                        <td class="py-3 pe-3 text-start">
+                          <a
+                            href="javascript:void(0)"
+                            class="font-medium text-indigo-500 hover:text-indigo-700"
+                            >Elite Fitness</a
+                          >
+                        </td>
+                        <td class="p-3 text-slate-600">Health and Wellness</td>
+                        <td class="p-3 font-medium">Los Angeles, CA</td>
+                        <td class="p-3 text-start">
+                          <div
+                            class="inline-block rounded-full bg-purple-100 px-2 py-1 text-xs font-semibold leading-4 text-purple-800"
+                          >
+                            $2M
+                          </div>
+                        </td>
+                        <td class="p-3 font-medium">
+                          sarah.johnson@elitefitness.com
+                        </td>
+                        <td class="py-3 ps-3 font-medium">
+                          <a
+                            href="javascript:void(0)"
+                            class="group inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 font-medium text-slate-800 transition duration-75 hover:border-indigo-300 hover:text-indigo-800 active:border-slate-200"
+                          >
+                            <span>Send Message</span>
+                            <svg
+                              class="hi-mini hi-arrow-right inline-block h-5 w-5 text-slate-400 transition duration-75 group-hover:text-indigo-600 group-active:translate-x-0.5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-gray-100 dark:border-slate-700/50"
+                      >
+                        <td class="py-3 pe-3 text-start">
+                          <a
+                            href="javascript:void(0)"
+                            class="font-medium text-indigo-500 hover:text-indigo-700"
+                            >Sparkle Inc.</a
+                          >
+                        </td>
+                        <td class="p-3 text-slate-600">Cosmetics</td>
+                        <td class="p-3 font-medium">Paris, France</td>
+                        <td class="p-3 text-start">
+                          <div
+                            class="inline-block rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold leading-4 text-emerald-800"
+                          >
+                            $15M
+                          </div>
+                        </td>
+                        <td class="p-3 font-medium">
+                          julie.duval@sparkleinc.com
+                        </td>
+                        <td class="py-3 ps-3 font-medium">
+                          <a
+                            href="javascript:void(0)"
+                            class="group inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 font-medium text-slate-800 transition duration-75 hover:border-indigo-300 hover:text-indigo-800 active:border-slate-200"
+                          >
+                            <span>Send Message</span>
+                            <svg
+                              class="hi-mini hi-arrow-right inline-block h-5 w-5 text-slate-400 transition duration-75 group-hover:text-indigo-600 group-active:translate-x-0.5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-gray-100 dark:border-slate-700/50"
+                      >
+                        <td class="py-3 pe-3 text-start">
+                          <a
+                            href="javascript:void(0)"
+                            class="font-medium text-indigo-500 hover:text-indigo-700"
+                            >SolarTech</a
+                          >
+                        </td>
+                        <td class="p-3 text-slate-600">Renewable Energy</td>
+                        <td class="p-3 font-medium">Austin, TX</td>
+                        <td class="p-3 text-start">
+                          <div
+                            class="inline-block rounded-full bg-purple-100 px-2 py-1 text-xs font-semibold leading-4 text-purple-800"
+                          >
+                            $8M
+                          </div>
+                        </td>
+                        <td class="p-3 font-medium">andrew.kim@solartech.com</td>
+                        <td class="py-3 ps-3 font-medium">
+                          <a
+                            href="javascript:void(0)"
+                            class="group inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 font-medium text-slate-800 transition duration-75 hover:border-indigo-300 hover:text-indigo-800 active:border-slate-200"
+                          >
+                            <span>Send Message</span>
+                            <svg
+                              class="hi-mini hi-arrow-right inline-block h-5 w-5 text-slate-400 transition duration-75 group-hover:text-indigo-600 group-active:translate-x-0.5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-gray-100 dark:border-slate-700/50"
+                      >
+                        <td class="py-3 pe-3 text-start">
+                          <a
+                            href="javascript:void(0)"
+                            class="font-medium text-indigo-500 hover:text-indigo-700"
+                            >Zenith Co.</a
+                          >
+                        </td>
+                        <td class="p-3 text-slate-600">Finance</td>
+                        <td class="p-3 font-medium">Hong Kong, China</td>
+                        <td class="p-3 text-start">
+                          <div
+                            class="inline-block rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold leading-4 text-emerald-800"
+                          >
+                            $30M
+                          </div>
+                        </td>
+                        <td class="p-3 font-medium">david.chen@zenithco.com</td>
+                        <td class="py-3 ps-3 font-medium">
+                          <a
+                            href="javascript:void(0)"
+                            class="group inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 font-medium text-slate-800 transition duration-75 hover:border-indigo-300 hover:text-indigo-800 active:border-slate-200"
+                          >
+                            <span>Send Message</span>
+                            <svg
+                              class="hi-mini hi-arrow-right inline-block h-5 w-5 text-slate-400 transition duration-75 group-hover:text-indigo-600 group-active:translate-x-0.5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-gray-100 dark:border-slate-700/50"
+                      >
+                        <td class="py-3 pe-3 text-start">
+                          <a
+                            href="javascript:void(0)"
+                            class="font-medium text-indigo-500 hover:text-indigo-700"
+                            >Bright Solutions</a
+                          >
+                        </td>
+                        <td class="p-3 text-slate-600">IT Services</td>
+                        <td class="p-3 font-medium">Bangalore, India</td>
+                        <td class="p-3 text-start">
+                          <div
+                            class="inline-block rounded-full bg-purple-100 px-2 py-1 text-xs font-semibold leading-4 text-purple-800"
+                          >
+                            $12M
+                          </div>
+                        </td>
+                        <td class="p-3 font-medium">
+                          priya.sharma@brightsolutions.com
+                        </td>
+                        <td class="py-3 ps-3 font-medium">
+                          <a
+                            href="javascript:void(0)"
+                            class="group inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 font-medium text-slate-800 transition duration-75 hover:border-indigo-300 hover:text-indigo-800 active:border-slate-200"
+                          >
+                            <span>Send Message</span>
+                            <svg
+                              class="hi-mini hi-arrow-right inline-block h-5 w-5 text-slate-400 transition duration-75 group-hover:text-indigo-600 group-active:translate-x-0.5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </a>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-gray-100 dark:border-slate-700/50"
+                      >
+                        <td class="py-3 pe-3 text-start">
+                          <a
+                            href="javascript:void(0)"
+                            class="font-medium text-indigo-500 hover:text-indigo-700"
+                            >Green Growth</a
+                          >
+                        </td>
+                        <td class="p-3 text-slate-600">Agriculture</td>
+                        <td class="p-3 font-medium">Cape Town, South Africa</td>
+                        <td class="p-3 text-start">
+                          <div
+                            class="inline-block rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold leading-4 text-emerald-800"
+                          >
+                            $3M
+                          </div>
+                        </td>
+                        <td class="p-3 font-medium">
+                          samuel.mbatha@greengrowth.com
+                        </td>
+                        <td class="py-3 ps-3 font-medium">
+                          <a
+                            href="javascript:void(0)"
+                            class="group inline-flex items-center gap-1 rounded-xl border border-slate-200 px-2.5 py-1.5 font-medium text-slate-800 transition duration-75 hover:border-indigo-300 hover:text-indigo-800 active:border-slate-200"
+                          >
+                            <span>Send Message</span>
+                            <svg
+                              class="hi-mini hi-arrow-right inline-block h-5 w-5 text-slate-400 transition duration-75 group-hover:text-indigo-600 group-active:translate-x-0.5"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody> -->
+                    <!-- END Table Body -->
+                  <!-- </table> -->
+                  <!-- END Alternate Responsive Table -->
+                <!-- </div> -->
+                <!-- END Responsive Table Container -->
+              <!-- </div> -->
+              <!-- END Leads -->
+      
+              <!-- Resources -->
+              <!-- <div>
+                <h2 class="mb-1 text-2xl font-semibold">Resources</h2>
+                <h3 class="mb-8 text-sm font-medium text-slate-600">
+                  Helpful links to make your job easier
+                </h3>
+                <div class="grid grid-cols-1 gap-16 xl:grid-cols-3"> -->
+                  <!-- Documentation -->
+                  <!-- <div>
+                    <h4 class="mb-0.5 font-semibold">Documentation</h4>
+                    <h5 class="text-sm text-gray-600">Most popular articles</h5>
+                    <ul class="divide-y divide-dashed pt-3">
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Getting Started</span>
+                          <svg
+                            class="hi-mini hi-document-text inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M4.5 2A1.5 1.5 0 003 3.5v13A1.5 1.5 0 004.5 18h11a1.5 1.5 0 001.5-1.5V7.621a1.5 1.5 0 00-.44-1.06l-4.12-4.122A1.5 1.5 0 0011.378 2H4.5zm2.25 8.5a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm0 3a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Sending Messages</span>
+                          <svg
+                            class="hi-mini hi-document-text inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M4.5 2A1.5 1.5 0 003 3.5v13A1.5 1.5 0 004.5 18h11a1.5 1.5 0 001.5-1.5V7.621a1.5 1.5 0 00-.44-1.06l-4.12-4.122A1.5 1.5 0 0011.378 2H4.5zm2.25 8.5a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm0 3a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Finding new leads</span>
+                          <svg
+                            class="hi-mini hi-document-text inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M4.5 2A1.5 1.5 0 003 3.5v13A1.5 1.5 0 004.5 18h11a1.5 1.5 0 001.5-1.5V7.621a1.5 1.5 0 00-.44-1.06l-4.12-4.122A1.5 1.5 0 0011.378 2H4.5zm2.25 8.5a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm0 3a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Closing a deal</span>
+                          <svg
+                            class="hi-mini hi-document-text inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M4.5 2A1.5 1.5 0 003 3.5v13A1.5 1.5 0 004.5 18h11a1.5 1.5 0 001.5-1.5V7.621a1.5 1.5 0 00-.44-1.06l-4.12-4.122A1.5 1.5 0 0011.378 2H4.5zm2.25 8.5a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm0 3a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div> -->
+                  <!-- END Documentation -->
+      
+                  <!-- Assets -->
+                  <!-- <div>
+                    <h4 class="mb-0.5 font-semibold">Assets</h4>
+                    <h5 class="text-sm text-gray-600">
+                      Everything you might need
+                    </h5>
+                    <ul class="divide-y divide-dashed pt-3">
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>AI Prompts</span>
+                          <svg
+                            class="hi-mini hi-briefcase inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M6 3.75A2.75 2.75 0 018.75 1h2.5A2.75 2.75 0 0114 3.75v.443c.572.055 1.14.122 1.706.2C17.053 4.582 18 5.75 18 7.07v3.469c0 1.126-.694 2.191-1.83 2.54-1.952.599-4.024.921-6.17.921s-4.219-.322-6.17-.921C2.694 12.73 2 11.665 2 10.539V7.07c0-1.321.947-2.489 2.294-2.676A41.047 41.047 0 016 4.193V3.75zm6.5 0v.325a41.622 41.622 0 00-5 0V3.75c0-.69.56-1.25 1.25-1.25h2.5c.69 0 1.25.56 1.25 1.25zM10 10a1 1 0 00-1 1v.01a1 1 0 001 1h.01a1 1 0 001-1V11a1 1 0 00-1-1H10z"
+                              clip-rule="evenodd"
+                            />
+                            <path
+                              d="M3 15.055v-.684c.126.053.255.1.39.142 2.092.642 4.313.987 6.61.987 2.297 0 4.518-.345 6.61-.987.135-.041.264-.089.39-.142v.684c0 1.347-.985 2.53-2.363 2.686a41.454 41.454 0 01-9.274 0C3.985 17.585 3 16.402 3 15.055z"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Graphics</span>
+                          <svg
+                            class="hi-mini hi-briefcase inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M6 3.75A2.75 2.75 0 018.75 1h2.5A2.75 2.75 0 0114 3.75v.443c.572.055 1.14.122 1.706.2C17.053 4.582 18 5.75 18 7.07v3.469c0 1.126-.694 2.191-1.83 2.54-1.952.599-4.024.921-6.17.921s-4.219-.322-6.17-.921C2.694 12.73 2 11.665 2 10.539V7.07c0-1.321.947-2.489 2.294-2.676A41.047 41.047 0 016 4.193V3.75zm6.5 0v.325a41.622 41.622 0 00-5 0V3.75c0-.69.56-1.25 1.25-1.25h2.5c.69 0 1.25.56 1.25 1.25zM10 10a1 1 0 00-1 1v.01a1 1 0 001 1h.01a1 1 0 001-1V11a1 1 0 00-1-1H10z"
+                              clip-rule="evenodd"
+                            />
+                            <path
+                              d="M3 15.055v-.684c.126.053.255.1.39.142 2.092.642 4.313.987 6.61.987 2.297 0 4.518-.345 6.61-.987.135-.041.264-.089.39-.142v.684c0 1.347-.985 2.53-2.363 2.686a41.454 41.454 0 01-9.274 0C3.985 17.585 3 16.402 3 15.055z"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Videos</span>
+                          <svg
+                            class="hi-mini hi-briefcase inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M6 3.75A2.75 2.75 0 018.75 1h2.5A2.75 2.75 0 0114 3.75v.443c.572.055 1.14.122 1.706.2C17.053 4.582 18 5.75 18 7.07v3.469c0 1.126-.694 2.191-1.83 2.54-1.952.599-4.024.921-6.17.921s-4.219-.322-6.17-.921C2.694 12.73 2 11.665 2 10.539V7.07c0-1.321.947-2.489 2.294-2.676A41.047 41.047 0 016 4.193V3.75zm6.5 0v.325a41.622 41.622 0 00-5 0V3.75c0-.69.56-1.25 1.25-1.25h2.5c.69 0 1.25.56 1.25 1.25zM10 10a1 1 0 00-1 1v.01a1 1 0 001 1h.01a1 1 0 001-1V11a1 1 0 00-1-1H10z"
+                              clip-rule="evenodd"
+                            />
+                            <path
+                              d="M3 15.055v-.684c.126.053.255.1.39.142 2.092.642 4.313.987 6.61.987 2.297 0 4.518-.345 6.61-.987.135-.041.264-.089.39-.142v.684c0 1.347-.985 2.53-2.363 2.686a41.454 41.454 0 01-9.274 0C3.985 17.585 3 16.402 3 15.055z"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Icons</span>
+                          <svg
+                            class="hi-mini hi-briefcase inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M6 3.75A2.75 2.75 0 018.75 1h2.5A2.75 2.75 0 0114 3.75v.443c.572.055 1.14.122 1.706.2C17.053 4.582 18 5.75 18 7.07v3.469c0 1.126-.694 2.191-1.83 2.54-1.952.599-4.024.921-6.17.921s-4.219-.322-6.17-.921C2.694 12.73 2 11.665 2 10.539V7.07c0-1.321.947-2.489 2.294-2.676A41.047 41.047 0 016 4.193V3.75zm6.5 0v.325a41.622 41.622 0 00-5 0V3.75c0-.69.56-1.25 1.25-1.25h2.5c.69 0 1.25.56 1.25 1.25zM10 10a1 1 0 00-1 1v.01a1 1 0 001 1h.01a1 1 0 001-1V11a1 1 0 00-1-1H10z"
+                              clip-rule="evenodd"
+                            />
+                            <path
+                              d="M3 15.055v-.684c.126.053.255.1.39.142 2.092.642 4.313.987 6.61.987 2.297 0 4.518-.345 6.61-.987.135-.041.264-.089.39-.142v.684c0 1.347-.985 2.53-2.363 2.686a41.454 41.454 0 01-9.274 0C3.985 17.585 3 16.402 3 15.055z"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div> -->
+                  <!-- END Assets -->
+      
+                  <!-- External Links -->
+                  <!-- <div>
+                    <h4 class="mb-0.5 font-semibold">External Links</h4>
+                    <h5 class="text-sm text-gray-600">Services we use</h5>
+                    <ul class="divide-y divide-dashed pt-3">
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Analytics</span>
+                          <svg
+                            class="hi-mini hi-arrow-top-right-on-square inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                              clip-rule="evenodd"
+                            />
+                            <path
+                              fill-rule="evenodd"
+                              d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Google Docs</span>
+                          <svg
+                            class="hi-mini hi-arrow-top-right-on-square inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                              clip-rule="evenodd"
+                            />
+                            <path
+                              fill-rule="evenodd"
+                              d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Discord</span>
+                          <svg
+                            class="hi-mini hi-arrow-top-right-on-square inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                              clip-rule="evenodd"
+                            />
+                            <path
+                              fill-rule="evenodd"
+                              d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="javascript:void(0)"
+                          class="group flex items-center justify-between py-2 text-sm font-medium text-indigo-500 hover:text-indigo-700"
+                        >
+                          <span>Tailkit</span>
+                          <svg
+                            class="hi-mini hi-arrow-top-right-on-square inline-block h-5 w-5 text-slate-400 group-hover:text-indigo-600"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M4.25 5.5a.75.75 0 00-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 00.75-.75v-4a.75.75 0 011.5 0v4A2.25 2.25 0 0112.75 17h-8.5A2.25 2.25 0 012 14.75v-8.5A2.25 2.25 0 014.25 4h5a.75.75 0 010 1.5h-5z"
+                              clip-rule="evenodd"
+                            />
+                            <path
+                              fill-rule="evenodd"
+                              d="M6.194 12.753a.75.75 0 001.06.053L16.5 4.44v2.81a.75.75 0 001.5 0v-4.5a.75.75 0 00-.75-.75h-4.5a.75.75 0 000 1.5h2.553l-9.056 8.194a.75.75 0 00-.053 1.06z"
+                              clip-rule="evenodd"
+                            />
+                          </svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div> -->
+                  <!-- END External Links -->
+                </div>
+              </div>
+              <!-- END Resources -->
+            </div>
+            <!-- END Page Section -->
+          </main>
+          <!-- END Page Content -->
+      
+          <!-- Page Footer -->
+          <!-- <footer
+            id="page-footer"
+            class="flex grow-0 items-center border-t border-slate-100"
+          >
+            <div
+              class="container mx-auto flex flex-col gap-2 px-4 py-6 text-center text-sm font-medium text-slate-600 md:flex-row md:justify-between md:gap-0 md:text-start lg:px-8 xl:max-w-7xl"
+            >
+              <div>© <span class="font-semibold">TailLead</span></div>
+              <div class="inline-flex items-center justify-center">
+                <span>Crafted with</span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  class="mx-1 h-4 w-4 text-red-600"
+                >
+                  <path
+                    d="M9.653 16.915l-.005-.003-.019-.01a20.759 20.759 0 01-1.162-.682 22.045 22.045 0 01-2.582-1.9C4.045 12.733 2 10.352 2 7.5a4.5 4.5 0 018-2.828A4.5 4.5 0 0118 7.5c0 2.852-2.044 5.233-3.885 6.82a22.049 22.049 0 01-3.744 2.582l-.019.01-.005.003h-.002a.739.739 0 01-.69.001l-.002-.001z"
+                  ></path>
+                </svg>
+                <span
+                  >by
+                  <a
+                    class="font-medium text-indigo-600 transition hover:text-indigo-700"
+                    href="https://pixelcave.com"
+                    target="_blank"
+                    >pixelcave</a
+                  ></span
+                >
+              </div>
+            </div>
+          </footer> -->
+          <!-- END Page Footer -->
+        </div>
+        <!-- END Page Container -->
+      </div>
+  </body>
+</html>
